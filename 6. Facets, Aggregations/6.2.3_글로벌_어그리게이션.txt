@@ -1,0 +1,16 @@
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "query": {
+        "term": { "name" : "seoul"}
+    },
+    "aggs": {
+        "all_price": {
+            "global": {},
+            "aggs": {
+                "avg_price": {
+                    "avg": {"field": "price"}
+                }
+            }
+        }
+    }
+}'
