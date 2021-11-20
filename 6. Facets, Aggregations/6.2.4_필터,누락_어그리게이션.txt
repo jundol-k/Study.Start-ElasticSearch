@@ -1,0 +1,18 @@
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "filter_name": {
+            "filter": {
+                "term": {"name": "seoul"}
+            },
+            "aggs": {
+                "avg_price": {"avg": {"field": "price"}}
+            }
+        },        
+        "avg_price": {
+            "avg": {"field": "price"}
+        }
+    }
+}'
+
