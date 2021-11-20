@@ -11,7 +11,7 @@ curl -XPUT http://localhost:9200/hotels -d '
             "city": {"type":"text"},
             "address": {"type":"text"},
             "internet": {"type":"boolean"},
-            "service": {"type":"text", "index": "false"},
+            "service": {"type":"keyword"},
             "checkin": {
                 "type":"date", 
                 "format": "yyyy-MM-dd'T'HH:mm:ss"
