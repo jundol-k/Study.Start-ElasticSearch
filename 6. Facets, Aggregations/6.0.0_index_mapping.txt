@@ -1,0 +1,24 @@
+# 데이터에도 변경사항이 있습니다. 6.0.0_example_data_hotels.json 파일을 참고하세요.
+# create index mapping
+curl -XPUT http://localhost:9200/hotels -d '
+{
+    "mappings": {
+        "properties": {
+            "name": { "type" : "text" },
+            "stars": { "type" : "long" },
+            "rooms": { "type": "long" },
+            "location": { "type": "geo_point"},
+            "city": {"type":"text"},
+            "address": {"type":"text"},
+            "internet": {"type":"boolean"},
+            "service": {"type":"text", "index": "false"},
+            "checkin": {
+                "type":"date", 
+                "format": "yyyy-MM-dd'T'HH:mm:ss"
+            }
+        }
+    }
+}'
+
+# select index mapping
+curl -XGET http://localhost:9200/hotels/_mapping
