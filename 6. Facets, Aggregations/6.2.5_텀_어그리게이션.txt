@@ -1,0 +1,19 @@
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "terms_stars": {
+            "terms": {
+                "field": "stars",
+                "order": {
+                    "_term": "desc"
+                }
+            },
+            "aggs": {
+                "avg_price": {
+                    "avg": {"field": "price"}
+                }
+            }
+        }
+    }
+}'

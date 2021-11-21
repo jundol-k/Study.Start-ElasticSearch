@@ -1,0 +1,61 @@
+# 위치거리 어그리게이션
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "geo_location": {
+            "geo_distance": {
+                "field": "location",
+                "origin": "37.52, 126.98",
+                "distance_type": "plane",
+                "unit": "km",
+                "ranges": [
+                    {"to": 3},
+                    {"from": 3, "to": 6},
+                    {"from": 6, "to": 9},
+                    {"from": 9}
+                ]
+            }
+        }
+    }
+}'
+
+# 위치 해시 그리드 어그리게이션
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "geohash_location": {
+            "geohash_grid": {
+                "field": "location",
+                "precision": 5
+            }
+        }
+    }
+}'
+
+# 위치 해시 어그리게이션을 필터 어그리게이션과 함께 사용하기
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "geohash_filter": {
+            "filter": {
+                "geo_bounding_box": {
+                    "location": {
+                        "top_left": "38.00, 126.00",
+                        "bottom_right": "37.00, 127.00"
+                    }
+                }
+            },
+            "aggs": {
+                "geohash_location": {
+                    "geohash_grid": {
+                        "field": "location",
+                        "precision": 5
+                    }
+                }
+            }
+        }
+    }
+}'

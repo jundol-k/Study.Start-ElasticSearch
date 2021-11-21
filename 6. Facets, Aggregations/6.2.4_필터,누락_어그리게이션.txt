@@ -1,3 +1,4 @@
+# 필터 어그리게이션
 curl 'localhost:9200/hotels/_search?pretty -d '
 {
     "_source": "false",
@@ -16,3 +17,18 @@ curl 'localhost:9200/hotels/_search?pretty -d '
     }
 }'
 
+# 누락 어그리게이션
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "missing_service": {
+            "missing": {"field": "service"},
+            "aggs": {
+                "avg_price": {
+                    "avg": { "field": "price" }
+                }
+            }
+        }
+    }
+}'

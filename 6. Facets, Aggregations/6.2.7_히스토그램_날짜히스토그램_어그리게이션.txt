@@ -1,0 +1,38 @@
+# 히스토그램
+# 방 갯수를 300 단위로 구분하고 stats를 통한 합계를 기준으로 오름차순 정렬
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "histo_rooms": {
+            "histogram": {
+                "field": "rooms",
+                "min_doc_count": 0,
+                "interval": 300,
+                "order": { "state_rooms.sum": "asc"}
+            },
+            "aggs": {
+                "state_rooms": {
+                    "stats": {
+                        "field": "rooms"
+                    }
+                }
+            }
+        }
+    }
+}'
+
+# 날짜 히스토그램
+curl 'localhost:9200/hotels/_search?pretty -d '
+{
+    "_source": "false",
+    "aggs": {
+        "histo_checkin": {
+            "date_histogram": {
+                "field": "checkin",
+                "interval": "1M",
+                "format": "yyyy-MM-dd E"
+            }
+        }
+    }
+}'
