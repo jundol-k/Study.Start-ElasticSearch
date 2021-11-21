@@ -1,0 +1,24 @@
+# 매치 쿼리 오퍼레이터 사용시
+curl 'localhost:9200/books/_search?pretty -d '
+{
+    "query": {
+        "match": {
+            "title": {
+                "query": "The And",
+                "operator": "and"
+            }
+        }
+    }
+}
+
+
+# match_phrase
+curl 'localhost:9200/books/_search?pretty -d '
+{
+    "query": {
+        "match_phrase": {
+            "title": "and the"
+        }
+    }
+}
+
